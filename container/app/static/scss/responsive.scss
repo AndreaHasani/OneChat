@@ -1,0 +1,76 @@
+/* ==========================================================================
+Media Queries
+========================================================================== */
+
+@media only screen and (max-width: $break-xs) {
+}
+
+@media only screen and (max-width: $break-sm) {
+}
+
+@media only screen and (max-width: $break-md) {
+    /*Make dropdown links appear inline*/
+
+    .mobile-menu {
+
+	#menu {
+	    background-color: $main-color;
+	    margin-bottom: 2em;
+	    width: 100%;
+	}
+
+	#title {
+	    display: none;
+	}
+	ul {
+	    position: static;
+	    overflow: hidden;
+	    max-height: 0;
+	    clear: both;
+	    -webkit-transition: all 0.4s ease-out;
+	    -moz-transition: all 0.4s ease-out;
+	    -ms-transition: all 0.4s ease-out;
+	    -o-transition: all 0.4s ease-out;
+	    transition: all 0.4s ease-out;
+	}
+	li {
+	    margin-bottom: 1px;
+	}
+	ul li, li a {
+	    width: 100%;
+	    min-width: 140px;
+	}
+	.show-menu {
+	    display: block;
+	    border-bottom: solid;
+	    border-bottom-color: $main-color-darker;
+	    border-top: solid;
+	    border-top-color: $main-color-darker;
+	}
+	.lines {
+	    border-bottom: 15px double #f8f8f8;
+	    border-top: 5px solid #f8f8f8;
+	    content: "";
+	    height: 1.4em;
+	    width: 20px;
+	    padding-right: 15px;
+	    float: right;
+	}
+    }
+
+}
+
+@media only screen and (max-width: $break-lg) {
+    .mobile-menu {
+	ul {
+	    li {
+		a {
+		    min-width: 120px;
+		}
+	    }
+	}
+    }
+}
+
+@media only screen and (max-width: $break-xl) {
+}

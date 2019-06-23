@@ -1,0 +1,58 @@
+version: '3'
+services:
+    # flaskapp:
+    #     build: .
+    #     image: wemeet
+    #     depends_on:
+    #       - database
+    #     volumes:
+    #         - ./container:/usr/src/container
+    #     ports:
+    #       - "3031:5000"
+
+    #     command: uwsgi --emperor /usr/src/container
+
+    #     networks:
+    #         - flask-sites
+
+    # memcach:
+    #     image: memcached
+    #     container_name: memcached_v1
+    #     ports:
+    #       - 11211:11211
+    #     expose:
+    #       - 11211
+    #     restart: always
+    #     environment:
+    #       -  MEMCACHED_USER=memcached
+    #       -  MEMCACHED_HOST=0.0.0.0
+    #       -  MEMCACHED_PORT=11211
+    #       -  MEMCACHED_MEMUSAGE=64
+    #       -  MEMCACHED_MAXCONN=1024
+    #       -  MEMCACHED_THREADS=4
+    #       -  MEMCACHED_REQUESTS_PER_EVENT=20
+
+    #     networks:
+    #         - flask-sites
+
+
+    database:
+        image: yobasystems/alpine-mariadb
+        # Don't forget to use this name on mysql --host=container_name
+        container_name: flask-db
+        environment:
+            MYSQL_ROOT_PASSWORD: toor
+            MYSQL_DATABASE: wemeet
+            MYSQL_USER: strixx
+            MYSQL_PASSWORD: 12345678
+        volumes:
+            - /home/strixx/.mysql/wemeet:/var/lib/mysql
+        ports:
+            - 3318:3306
+        networks:
+            - flask-sites
+
+networks:
+    flask-sites:
+        driver: "bridge"
+

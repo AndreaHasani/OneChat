@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html lang="en">
+<head class="h-100">
+    {% block head %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+    <title>Bare Flask Template</title>
+    {% endblock %}
+
+    <script type=text/javascript>
+	$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+    <!--[if lt IE 9]>
+	<script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    {% block content %}{% endblock %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script type="application/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
+    <script type="application/javascript" src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
+    <script type="application/javascript" src="//cdnjs.cloudflare.com/ajax/libs/clone/2.1.2/clone.min.js"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

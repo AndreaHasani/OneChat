@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block head %}
+<meta name="description" content="Template" />
+{{ super() }}
+{% endblock %}
+<!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+{% block content %}
+<div id="frame">
+	<div id="sidepanel">
+		<div id="profile">
+			<div class="wrap">
+				<img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+				<p>{{ user }}</p>
+				<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+				<div id="status-options">
+					<ul>
+						<li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+						<li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
+						<li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
+						<li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
+					</ul>
+				</div>
+				<div id="expanded">
+					<label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+					<input name="twitter" type="text" value="mikeross" />
+					<label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+					<input name="twitter" type="text" value="ross81" />
+					<label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+					<input name="twitter" type="text" value="mike.ross" />
+				</div>
+			</div>
+		</div>
+		<div id="search">
+			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+			<input type="text" placeholder="Search contacts..." />
+		</div>
+		<div id="contacts">
+			<ul>
+	{% if friends != undefined %}
+	    {% for friend in friends %}
+				<li class="contact">
+					<div class="wrap">
+					    <span class="contact-status {{ friend.user_info.status }}"></span>
+						<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+						<div class="meta">
+						    <p class="name">{{ friend.username }}</p>
+							<p class="preview">Wrong. You take the gun, or you pull out a bigger one. Or, you call their bluff. Or, you do any one of a hundred and forty six other things.</p>
+						</div>
+					</div>
+				</li>
+				{% endfor %}
+				{% endif %}
+			</ul>
+		</div>
+		<div id="bottom-bar">
+			<button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+			<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+		</div>
+	</div>
+	<div class="content">
+		<div class="contact-profile">
+			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+			<p class="username">Select User</p>
+			<div class="social-media">
+				<i class="fa fa-facebook" aria-hidden="true"></i>
+				<i class="fa fa-twitter" aria-hidden="true"></i>
+				 <i class="fa fa-instagram" aria-hidden="true"></i>
+			</div>
+		</div>
+		<div class="messages">
+			<ul>
+			</ul>
+		</div>
+		<div class="message-input">
+			<div class="wrap">
+			<input id="message-to-send" type="text" placeholder="Write your message..." disabled/>
+			<input id="file_attachment" type="file" style="position: fixed; top: -100em">
+			<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+{% raw %}
+<script id="message-template" type="text/x-handlebars-template">
+    <li class="sent">
+					<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+					<p>{{ response }}</p>
+				</li>
+</script>
+
+<script id="message-response-template" type="text/x-handlebars-template">
+    <li class="replies">
+					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+					<p>{{ response }}</p>
+			    </li>
+</script>
+
+{% endraw %}
+
+
+{% endblock %}
