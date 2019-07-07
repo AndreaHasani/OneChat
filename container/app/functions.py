@@ -5,27 +5,39 @@ from flask import request, session
 from flask_login import current_user
 from app.models import User, Message, Friendship
 import datetime
+import functools
+
+def authenticated_only(f):
+    @functools.wraps(f)
+    def wrapped(*args, **kwargs):
+        if not current_user.is_authenticated:
+            disconnect()
+        else:
+            return f(*args, **kwargs)
+    return wrapped
 
 class ChatIO(Namespace):
 
+    @authenticated_only
     def on_join(self):
-        if current_user.is_authenticated:
-            current_user.user_info.status = "online"
-            db.session.commit()
-            # cache.set('users_status_%s' % current_user.username, session[current_user.username])
-            emit('status', {'user': current_user.username, 'status': 'user_online'}, room=current_user.key[0], include_self=False)
-                ### Ignore bcz of GET -> =
-            for friend in current_user.friendships:
-                join_room(friend.chatKey)
+        session['sid'] = request.sid
+        current_user.user_info.status = "online"
+        db.session.commit()
+        # cache.set('users_status_%s' % current_user.username, session[current_user.username])
+        emit('status', {'user': current_user.username, 'status': 'user_online'}, room=current_user.key[0], include_self=False)
+        ### Ignore bcz of GET -> =
+        for friend in current_user.friendships:
+            join_room(friend.chatKey)
 
+    @authenticated_only
     def on_leave(self):
         # room = message.get('room', None)
-        if current_user.is_authenticated:
-            current_user.user_info.status = "offline"
-            current_user.user_info.last_seen = datetime.datetime.now()
-            db.session.commit()
-            # cache.set('users_status_%s' % current_user.username, session[current_user.username])
-            emit('status', {'user': current_user.username, 'status': 'user_offline'}, room=current_user.key[0], include_self=False)
+        session.pop('sid')
+        current_user.user_info.status = "offline"
+        current_user.user_info.last_seen = datetime.datetime.now()
+        db.session.commit()
+        # cache.set('users_status_%s' % current_user.username, session[current_user.username])
+        emit('status', {'user': current_user.username, 'status': 'user_offline'}, room=current_user.key[0], include_self=False)
         # if room:
         #     leave_room(room)
         # else:
@@ -33,6 +45,7 @@ class ChatIO(Namespace):
         #         leave_room(room)
 
 
+    @authenticated_only
     def on_text(self, message):
         recipient = message['recipient']
         body = message['msg']
@@ -46,9 +59,10 @@ class ChatIO(Namespace):
         db.session.add(message)
         db.session.commit()
 
-        emit('message', {'user': current_user.username, 'msg': body}, room=room, include_self=False, broadcast=False, callback=msg_recv)
+        emit('message', {'user': current_user.username, 'msg': body}, room=room, include_self=False, broadcast=False)
 
 
+    @authenticated_only
     def on_typing(self, message):
         recipient = message['recipient']
         recipient_user = db.session.query(User).filter_by(username=recipient).first()
@@ -62,18 +76,14 @@ class ChatIO(Namespace):
             emit('status', {'user': current_user.username, 'status': 'not_typing'}, room=room, include_self=False)
 
 
-    def on_upload(self, message):
-        file = message['file']
-
-
-
+    @authenticated_only
     def on_disconnect(self):
-        if current_user.is_authenticated:
-            print("Executing user logged in")
-            current_user.user_info.status = "offline"
-            emit('status', {'user': current_user.username, 'status': 'user_offline'}, room=current_user.key[0], include_self=False)
+        print("Executing user logged in")
+        current_user.user_info.status = "offline"
+        emit('status', {'user': current_user.username, 'status': 'user_offline'}, room=current_user.key[0], include_self=False)
         print('Client Disconnected', request.sid)
 
+    @authenticated_only
     def on_connect(self):
         print('Client connected', request.sid)
 

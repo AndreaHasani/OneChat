@@ -60,6 +60,7 @@ Author: Andrea Hasani
 ========================================================================== */
 
 body {
+    background-color: #d4d4d4 !important;
     display: flex;
     align-items: center;
     height: 100%;
@@ -178,7 +179,7 @@ body {
     max-width: 340px;
     width: 40%;
     height: 100%;
-    background: #2E5266;
+    background: #226066;;
     color: #f5f5f5;
     overflow: hidden;
     position: relative;
@@ -377,16 +378,17 @@ body {
         padding: 10px 0 10px 46px;
         width: calc(100% - 25px);
         border: none;
-        background: #6E8898;
+        background: #2C3C3D;
         color: #f5f5f5;
 	width: 100%;
         &:focus {
           outline: none;
-          background: #435f7a;
+          background: #017B86;
         }
-        &::-webkit-input-placeholder, &::-moz-placeholder, &:-ms-input-placeholder, &:-moz-placeholder {
-          color: #f5f5f5;
+        &::placeholder {
+          color: white;
         }
+
       }
     }
     #contacts {
@@ -476,6 +478,11 @@ body {
           }
         }
       }
+
+      #no-items-found {
+	  text-align: center;
+	  padding-top: 20px;
+      }
     }
     #bottom-bar {
       position: absolute;
@@ -486,7 +493,7 @@ body {
         border: none;
         width: 50%;
         padding: 10px 0;
-        background: #6E8898;
+        background: #2C3C3D;
         color: #f5f5f5;
         cursor: pointer;
         font-size: 0.85em;
@@ -495,10 +502,10 @@ body {
           outline: none;
         }
         &:nth-child(1) {
-          border-right: 1px solid #2c3e50;
+	    border-right: 1px solid #226066;
         }
         &:hover {
-          background: #435f7a;
+          background: #017B86;
         }
         i {
           margin-right: 3px;
@@ -565,7 +572,7 @@ body {
         float: left;
         margin: 15px 15px 5px 15px;
         width: calc(100% - 25px);
-        font-size: 0.9em;
+        font-size: 1.1em;
         &:nth-last-child(1) {
           margin-bottom: 20px;
         }
@@ -573,11 +580,44 @@ body {
           img {
             margin: 6px 8px 0 0;
           }
-          p {
+	  p {
+	      word-break: break-word;
+	  }
+          p, .attachment {
             background: #435f7a;
             color: #f5f5f5;
           }
+
+	  .attachment {
+	      display: inline-block;
+	      padding: 10px 15px;
+	      border-radius: 20px 20px 0 0;
+	      max-width: 205px;
+	      line-height: 130%;
+	      p {
+		  padding: 10px 0px;
+		  max-width: 100%;
+		  font-size: 80%;
+	      }
+
+	  }
         }
+
+	.attachment {
+
+	    .icon {
+		padding: 10px 20px;
+		text-align: center;
+
+		i {
+		    font-size: 3em;
+		}
+	    }
+
+	    .title::before {
+		content: "Title: ";
+        }
+	}
         &.replies {
           img {
             float: right;
@@ -621,6 +661,10 @@ body {
           &:focus {
             outline: none;
           }
+
+	  &:disabled::placeholder {
+	color: white;
+      }
         }
         .attachment {
           position: absolute;
@@ -641,10 +685,10 @@ body {
           width: 50px;
           padding: 12px 0;
           cursor: pointer;
-          background: #32465a;
+          background: #226066;
           color: #f5f5f5;
           &:hover {
-            background: #435f7a;
+            background: #017B86;
           }
           &:focus {
             outline: none;
@@ -752,8 +796,11 @@ body {
   .content {
     .messages {
       max-height: calc(100% - 105px);
-      ul li p {
-        max-width: 300px;
+      ul li {
+	  font-size: .8em;
+	  p {
+	      max-width: 80%;
+	  }
       }
     }
     .message-input .wrap {
@@ -771,7 +818,68 @@ body {
 }
 }
 
-@media screen and (max-width: 735px) {
-#frame #sidepanel {
+
+.prgrs {
+    height: 80%;
+    width: 80%;
+    margin: 10px auto;
 }
+
+.prgrs > svg {
+    height: 100%;
+    display: block;
 }
+
+@keyframes rotating {
+    from {
+	transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+    }
+    to {
+	transform: rotate(360deg);
+	-ms-transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+    from {
+	transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+    }
+    to {
+	transform: rotate(360deg);
+	-ms-transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+    }
+}
+.rotating {
+    svg {
+	-webkit-animation: rotating 2s linear infinite;
+	-moz-animation: rotating 2s linear infinite;
+	-ms-animation: rotating 2s linear infinite;
+	-o-animation: rotating 2s linear infinite;
+	animation: rotating 2s linear infinite;
+	transform-origin: 50% 50%;
+    }
+
+    .progressbar-text {
+	-webkit-transition: none;
+	-moz-transition: none;
+	-o-transition: none;
+	-ms-transition: none;
+	transition: none;
+    }
+}
+
+
+

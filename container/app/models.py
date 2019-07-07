@@ -49,6 +49,12 @@ class User(db.Model, UserMixin):
             self.friends.remove(friend)
             friend.friends.remove(self)
 
+
+    def __init__(self, **args):
+        super().__init__(**args)
+        User_Info(user=self)
+
+
 class Friendship(db.Model):
     __tablename__ = "friendships"
 
@@ -80,6 +86,18 @@ class Message(db.Model):
     message = db.Column('message', db.Text(), nullable=False)
     seen = db.Column('seen', db.Boolean(), nullable=False, default=0)
     created_at = db.Column('created_at', db.Date(), nullable=False)
+    attachment = db.relationship('Attachment', backref='message')
+
+class Attachment(db.Model):
+    __tablename__ = "attachment"
+
+    id = db.Column('id', db.Integer(), primary_key=True, nullable=False)
+    attachment_id = db.Column(db.String(64), nullable=False)
+    type = db.Column(db.String(64), nullable=False)
+    messageID = db.Column(db.Integer(), db.ForeignKey("message.id"), nullable=False)
+    file_name = db.Column(db.String(128), nullable=False)
+
+
 
 
 class User_Info(db.Model):

@@ -12,7 +12,7 @@
 	<div id="sidepanel">
 		<div id="profile">
 			<div class="wrap">
-				<img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+				<img id="profile-img" src="https://i.pravatar.cc/100?u={{user}}" class="online" alt="" />
 				<p>{{ user }}</p>
 				<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
 				<div id="status-options">
@@ -33,21 +33,21 @@
 				</div>
 			</div>
 		</div>
-		<div id="search">
+		<div id="search" class="search">
 			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
 			<input type="text" placeholder="Search contacts..." />
 		</div>
 		<div id="contacts">
-			<ul>
+			<ul class="list">
 	{% if friends != undefined %}
 	    {% for friend in friends %}
 				<li class="contact">
 					<div class="wrap">
 					    <span class="contact-status {{ friend.user_info.status }}"></span>
-						<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+					    <img src="https://i.pravatar.cc/100?u={{friend.username}}" alt="" />
 						<div class="meta">
 						    <p class="name">{{ friend.username }}</p>
-							<p class="preview">Wrong. You take the gun, or you pull out a bigger one. Or, you call their bluff. Or, you do any one of a hundred and forty six other things.</p>
+							<p class="preview"></p>
 						</div>
 					</div>
 				</li>
@@ -55,20 +55,15 @@
 				{% endif %}
 			</ul>
 		</div>
-		<div id="bottom-bar">
-			<button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
-			<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
-		</div>
+		<!-- <div id="bottom-bar"> -->
+		<!-- 	<button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button> -->
+		<!-- 	<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button> -->
+		<!-- </div> -->
 	</div>
 	<div class="content">
 		<div class="contact-profile">
-			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/1024px-Placeholder_no_text.svg.png" alt="" />
 			<p class="username">Select User</p>
-			<div class="social-media">
-				<i class="fa fa-facebook" aria-hidden="true"></i>
-				<i class="fa fa-twitter" aria-hidden="true"></i>
-				 <i class="fa fa-instagram" aria-hidden="true"></i>
-			</div>
 		</div>
 		<div class="messages">
 			<ul>
@@ -79,7 +74,7 @@
 			<input id="message-to-send" type="text" placeholder="Write your message..." disabled/>
 			<input id="file_attachment" type="file" style="position: fixed; top: -100em">
 			<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+			<button class="submit"><i class="fas fa-angle-right fa-lg"></i></button>
 			</div>
 		</div>
 	</div>
@@ -87,19 +82,66 @@
 {% raw %}
 <script id="message-template" type="text/x-handlebars-template">
     <li class="sent">
-					<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+					<img src="https://i.pravatar.cc/100?u={{user}}" alt="" />
 					<p>{{ response }}</p>
+				</li>
+</script>
+<script id="message-template-loading-attachment" type="text/x-handlebars-template">
+    <li class="sent">
+					<img src="https://i.pravatar.cc/100?u={{user}}" alt="" />
+					<div class="attachment">
+					<div class="rotating prgrs" id="prgrs"></div>
+					<p>{{ title }}</p>
+	</div>
+
+
+				</li>
+</script>
+
+
+<script id="message-template-icon-response-attachment" type="text/x-handlebars-template">
+    <li class="replies">
+					<img src="https://i.pravatar.cc/100?u={{user}}" alt="" />
+					<div class="attachment">
+					<div class="icon" id="{{attachment_id}}">
+					<a href='{{link}}'>
+<div class="fi fi-{{fileExtension}} fi-size-xl">
+    <div class="fi-content">{{fileExtension}}</div>
+</div>
+</a>
+					</div>
+					<p class='title'>{{ title }}</p>
+	</div>
+
+
+				</li>
+</script>
+
+<script id="message-template-icon-attachment" type="text/x-handlebars-template">
+    <li class="sent">
+					<img src="https://i.pravatar.cc/100?u={{user}}" alt="" />
+					<div class="attachment">
+					<div class="icon" id="{{attachment_id}}">
+					<a href='{{link}}'>
+<div class="fi fi-{{fileExtension}} fi-size-xl">
+    <div class="fi-content">{{fileExtension}}</div>
+</div>
+</a>
+					</div>
+					<p class='title'>{{ title }}</p>
+	</div>
+
+
 				</li>
 </script>
 
 <script id="message-response-template" type="text/x-handlebars-template">
     <li class="replies">
-					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+					<img src="https://i.pravatar.cc/100?u={{user}}" alt="" />
 					<p>{{ response }}</p>
 			    </li>
 </script>
 
 {% endraw %}
-
-
 {% endblock %}
+

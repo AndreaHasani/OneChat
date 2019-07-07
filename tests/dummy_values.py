@@ -83,7 +83,17 @@ class Message(Base):
     message = Column('message', Text(), nullable=False)
     seen = Column('seen', Boolean(), nullable=False, default=0)
     created_at = Column('created_at', DateTime(), nullable=False)
+    attachment = relationship('Attachment', backref='message')
 
+
+class Attachment(Base):
+    __tablename__ = "attachment"
+
+    id = Column('id', Integer(), primary_key=True, nullable=False)
+    attachment_id = Column(String(64), nullable=False)
+    type = Column(String(64), nullable=False)
+    messageID = Column(Integer(), ForeignKey("message.id"))
+    file_name = Column(String(128), nullable=False)
 
 class User_Info(Base):
     __tablename__ = "user_info"
