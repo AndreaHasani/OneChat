@@ -20,6 +20,7 @@ python ./tests/dummy_values.py
 ```
 
 Now your good to go
+You can see the app on localhost:3031.
 
 
 ## Contributing
