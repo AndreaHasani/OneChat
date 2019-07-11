@@ -154,7 +154,7 @@ class User_Info(Base):
 #     created_at = Column('created_at', Date(), nullable=False)
 
 
-engine = create_engine('mysql://root:toor@0.0.0.0:3318/wemeet', echo=True)
+engine = create_engine('mysql://root:toor@0.0.0.0:3318/oneChat', echo=True)
 Session = sessionmaker(bind=engine)
 session = Session()
 
