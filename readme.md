@@ -19,8 +19,8 @@ After doing this you will need to run tests/dummy_values.py. This script will po
 python ./tests/dummy_values.py
 ```
 
-Now your good to go
-You can see the app on localhost:3031.
+Now your good to go  
+You can see the app on `localhost:3031`
 
 
 ## Contributing
