@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, session, jsonify, abort, redirect, url_for
+from flask import Flask, render_template, request, session, jsonify, abort, redirect, url_for, send_from_directory
 from flask_login import login_required, login_user, logout_user, current_user
-from app.models import User
+from app.models import User, Attachment
 from app import application, login_manager, db, socketio
 from app.functions import *
+import os
 
 
 @application.route("/", methods=["GET", "POST"])
@@ -29,18 +30,16 @@ def index():
         return render_template("login.html")
 
 
-# @application.route("/upload", methods=["POST"])
-# def upload():
-#     if current_user.is_authenticated:
-#         file = request.files['file'].read()
-#         recipient = request.form['recipient']
-#         recipient_user = db.session.query(User).filter_by(username=recipient).first()
-#         room = recipient_user.key[0]
-#         socketio.emit('attachments', { 'file': file, 'size': request.form['file_size'],
-#                                       'type': request.form['file_type'], 'name': request.form['file_name']}, room=room, namespace='/api/chat')
-#         return jsonify(status="success")
-#     else:
-#         return redirect(url_for('index'))
+@application.route("/d", methods=["GET"])
+def download():
+    if current_user.is_authenticated:
+        user = request.args.get('u', None)
+        file_id = request.args.get('id', None)
+        uploads = os.path.join(application.root_path, application.config['UPLOAD_FOLDER'])
+        file = Attachment.query.filter_by(attachment_id=file_id).first()
+        return send_from_directory(directory=uploads, filename="%s_%s" % (user, file_id), as_attachment=True, attachment_filename=file.file_name)
+    else:
+        return redirect(url_for('index'))
 
 
 @login_manager.user_loader

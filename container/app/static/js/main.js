@@ -32,8 +32,10 @@ socket.on('attachments', function(message) {
     let file = new Blob([message.file], {type: message.type})
     let objectUrl = URL.createObjectURL(file);
     let template;
-    template = Handlebars.compile( $("#message-template-response-attachment").html());
+    template = Handlebars.compile( $("#message-template").html());
     context = {
+	attachment: true,
+	response: true,
 	title: message.title,
 	fileExtension: message.extension
     };
@@ -147,43 +149,37 @@ socket.on("connection_response", function(msg) {
 		    success: function (data) {
 			messages = data.messages;
 			for (let i = 0; i < messages.length; i++) {
+			    let context = {};
 			    if (messages[i].sender == user) {
+				context.response = false
+				context.user = user
 				if (messages[i].attachment){
-				    template = Handlebars.compile( $("#message-template-icon-attachment").html());
-				    context = {
-					title: messages[i].attachment.title,
-					user: user,
-					attachment_id: messages[i].attachment.id,
-					fileExtension: messages[i].attachment.extension
-				    };
+				    context.attachment = true
+				    context.title = messages[i].attachment.title;
+				    context.attachment_id = messages[i].attachment.id;
+				    context.fileExtension = messages[i].attachment.extension;
+				    context.link = messages[i].attachment.link;
 				}
 				else {
-				    template = Handlebars.compile( $("#message-template").html());
-				    context = {
-					response: messages[i].text,
-					user: user,
-				    };
+				    context.message = messages[i].text;
 				}
-
+				template = Handlebars.compile( $("#message-template").html());
 				dom.push(template(context))
 			    }
 			    else {
+				context.response = true;
+				context.user = that.recipient;
 				if (messages[i].attachment){
-				    template = Handlebars.compile( $("#message-template-response-icon-attachment").html());
-				    context = {
-					title: messages[i].attachment.title,
-					user: user,
-					attachment_id: messages[i].attachment.id,
-					fileExtension: messages[i].attachment.extension
-				    };
-				} 
-				else {
-				    template = Handlebars.compile( $("#message-response-template").html());
-				    context = {
-					response: messages[i].text,
-					user: that.recipient,
-				    };
+				    context.attachment = true
+				    context.title = messages[i].attachment.title;
+				    context.attachment_id = messages[i].attachment.id;
+				    context.fileExtension = messages[i].attachment.extension;
+				    context.link = messages[i].attachment.link;
 				}
+				else {
+				    context.message = messages[i].text;
+				}
+				template = Handlebars.compile( $("#message-template").html());
 				dom.push(template(context))
 			    }
 			}
@@ -222,7 +218,8 @@ socket.on("connection_response", function(msg) {
 		}
 		template = Handlebars.compile( $("#message-template").html());
 		 context = {
-		    response: this.messageToSend,
+		     response: false,
+		    message: this.messageToSend,
 		    time: this.getCurrentTime(),
 		    user: username
 		};
@@ -231,9 +228,10 @@ socket.on("connection_response", function(msg) {
 		// responses
 
 		$("#contacts li .meta p:contains('" + this.recipient + "')").parent().find(".preview").text(this.messageToSend)
-		template = Handlebars.compile($("#message-response-template").html());
+		template = Handlebars.compile($("#message-template").html());
 		 context = {
-		    response: this.messageToSend,
+		     response: true,
+		    message: this.messageToSend,
 		    time: this.getCurrentTime(),
 		    user: this.recipient,
 		};
@@ -260,8 +258,10 @@ socket.on("connection_response", function(msg) {
 	attachment: function(object) {
 	    let template, context;
 	    if (object.status == "send") {
-		template = Handlebars.compile( $("#message-template-loading-attachment").html());
+		template = Handlebars.compile( $("#message-template").html());
 		context = {
+		    attachment: true,
+		    attachment_loading: true,
 		    time: this.getCurrentTime(),
 		    title: object.title,
 		    user: this.user,
@@ -383,8 +383,10 @@ class Upload {
         },
 	    success: function (data) {
 		let template, context;
-		template = Handlebars.compile( $("#message-template-response-attachment").html());
+		template = Handlebars.compile( $("#message-template").html());
 		context = {
+		    attachment: true,
+		    response: false,
 		    title: that.getName(),
 		    attachment_id: that.attachment_id,
 		    user: username,

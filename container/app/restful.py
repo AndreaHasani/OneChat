@@ -1,4 +1,4 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, url_for
 from app.models import User, Message, Friendship, Attachment
 from app import socketio, db
 from flask_login import current_user
@@ -47,10 +47,15 @@ class ChatMessages(Resource):
                     message['sender'] = receiver.username
                     message['receiver'] = user.username
                 if m.attachment:
+                    try:
+                        extension = guess_extension(m.attachment[0].type).replace('.', '')
+                    except AttributeError:
+                        extension = ''
                     message['attachment'] = {
                         'title': m.attachment[0].file_name,
                         'id': m.attachment[0].attachment_id,
-                        'extension': guess_extension(m.attachment[0].type).replace('.', '')
+                        'extension': extension,
+                        'link': url_for('download', u=message['sender'], id=m.attachment[0].attachment_id)
                     }
                 message['text'] = m.message
                 messages.append(message)
@@ -73,15 +78,16 @@ class Attachments(Resource):
             recipient = args['receiver']
             sender = current_user.username
 
+
             file.save(os.path.join(current_app.root_path, 'static',
-                                   'uploads', '{}_{}'.format(sender, file_name)))
+                                   'uploads', '{}_{}'.format(sender, file_id)))
 
 
             recipient_user = User.query.filter_by(username=recipient).first()
             friendship_chat = Friendship.query.filter((Friendship.friend_a_id == current_user.id) & (
                 Friendship.friend_b_id == recipient_user.id)).first()
             room = friendship_chat.chatKey
-            print(file_id)
+
 
             # Saving to message table
             message = Message(message='', seen=False, created_at=datetime.datetime.now(
@@ -97,5 +103,6 @@ class Attachments(Resource):
             except KeyError:
                 return {'status': "KeyError: Couldn't send attachments"}
             return {'status': "succesful"}
+
         else:
             return {'status': "Error 401: Unauthorized"}

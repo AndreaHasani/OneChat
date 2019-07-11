@@ -8,3 +8,4 @@ class Configuration:
     SECRET_KEY = os.urandom(24)
     DEBUG = True
     SESSION_TYPE = 'filesystem'
+    UPLOAD_FOLDER = 'static/uploads/'

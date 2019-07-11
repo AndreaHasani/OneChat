@@ -81,66 +81,36 @@
 </div>
 {% raw %}
 <script id="message-template" type="text/x-handlebars-template">
+    {{#if response}}
+    <li class="replies">
+  {{else}}
     <li class="sent">
+{{/if}}
 					<img src="https://i.pravatar.cc/100?u={{user}}" alt="" />
-					<p>{{ response }}</p>
-				</li>
-</script>
-<script id="message-template-loading-attachment" type="text/x-handlebars-template">
-    <li class="sent">
-					<img src="https://i.pravatar.cc/100?u={{user}}" alt="" />
+
+    {{#if attachment}}
 					<div class="attachment">
+    {{#if attachment_loading}}
 					<div class="rotating prgrs" id="prgrs"></div>
-					<p>{{ title }}</p>
-	</div>
-
-
-				</li>
-</script>
-
-
-<script id="message-template-icon-response-attachment" type="text/x-handlebars-template">
-    <li class="replies">
-					<img src="https://i.pravatar.cc/100?u={{user}}" alt="" />
-					<div class="attachment">
-					<div class="icon" id="{{attachment_id}}">
-					<a href='{{link}}'>
-<div class="fi fi-{{fileExtension}} fi-size-xl">
-    <div class="fi-content">{{fileExtension}}</div>
-</div>
-</a>
-					</div>
+  {{else}}
+					    <div class="icon" id="{{attachment_id}}">
+					    <a href="{{link}}">
+    <div class="fi fi-{{fileExtension}} fi-size-xl">
+	<div class="fi-content">{{fileExtension}}</div>
+    </div>
+    </a>
+					    </div>
+{{/if}}
 					<p class='title'>{{ title }}</p>
 	</div>
+  {{else}}
+					<p>{{ message }}</p>
+{{/if}}
 
 
 				</li>
 </script>
 
-<script id="message-template-icon-attachment" type="text/x-handlebars-template">
-    <li class="sent">
-					<img src="https://i.pravatar.cc/100?u={{user}}" alt="" />
-					<div class="attachment">
-					<div class="icon" id="{{attachment_id}}">
-					<a href='{{link}}'>
-<div class="fi fi-{{fileExtension}} fi-size-xl">
-    <div class="fi-content">{{fileExtension}}</div>
-</div>
-</a>
-					</div>
-					<p class='title'>{{ title }}</p>
-	</div>
-
-
-				</li>
-</script>
-
-<script id="message-response-template" type="text/x-handlebars-template">
-    <li class="replies">
-					<img src="https://i.pravatar.cc/100?u={{user}}" alt="" />
-					<p>{{ response }}</p>
-			    </li>
-</script>
 
 {% endraw %}
 {% endblock %}
