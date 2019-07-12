@@ -23,6 +23,17 @@ Now your good to go
 You can see the app on `localhost:3031`
 
 
+## IMPORTANT
+
+In app folder config.py depends on a file called secrets which contains confidential variables.  
+Here is an example of what it may contain.
+
+```python
+class Secrets:
+    SQLALCHEMY_DATABASE_URI = 'mysql://username:password@database/oneChat'
+```
+
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
