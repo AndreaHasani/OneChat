@@ -504,6 +504,9 @@ var searchFilter = {
 
 searchFilter.init();
 
+$(".arrw-down i").click(function() {
+    $("#profile, #contacts").toggleClass('expanded');
+})
 });
 
 

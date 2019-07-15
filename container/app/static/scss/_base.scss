@@ -187,18 +187,13 @@ body {
       width: 80%;
       margin: 25px auto;
       &.expanded .wrap {
-        height: 210px;
+        height: 140px;
         line-height: initial;
         p {
           margin-top: 20px;
         }
-        i.expand-button {
-          -moz-transform: scaleY(-1);
-          -o-transform: scaleY(-1);
-          -webkit-transform: scaleY(-1);
-          transform: scaleY(-1);
-          filter: FlipH;
-          -ms-filter: "FlipH";
+        .arrw-down {
+	    padding-top: 65px;
         }
       }
       .wrap {
@@ -209,6 +204,17 @@ body {
         -o-transition: 0.3s height ease;
         -webkit-transition: 0.3s height ease;
         transition: 0.3s height ease;
+	.arrw-down {
+	    text-align: center;
+	    width: 100%;
+	    padding-top: 35px;
+	    position: absolute;
+	    left: 0;
+
+	    i {
+		font-size: 130%;
+	    }
+	}
         img {
           width: 50px;
           border-radius: 50%;
@@ -348,6 +354,9 @@ body {
             clear: both;
             margin: 0 8px 5px 0;
             padding: 5px 0;
+	    i {
+		font-size: 150%;
+	    }
           }
           input {
             border: none;
@@ -406,10 +415,13 @@ body {
         background-color: #243140;
       }
       ul li.contact {
-        position: relative;
-        padding: 10px 0 15px 0;
-        font-size: 0.9em;
-        cursor: pointer;
+	  display: flex;
+	  min-height: 65px;
+	  position: relative;
+	  padding: 10px 0 15px 0;
+	  font-size: .9em;
+	  cursor: pointer;
+	  align-items: center;
         &:hover {
           background: #32465a;
         }
@@ -722,6 +734,7 @@ body {
       background: #32465a;
       .wrap {
         height: 55px;
+
         p {
           display: none;
         }

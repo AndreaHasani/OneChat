@@ -14,7 +14,6 @@
 			<div class="wrap">
 				<img id="profile-img" src="https://i.pravatar.cc/100?u={{user}}" class="online" alt="" />
 				<p>{{ user }}</p>
-				<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
 				<div id="status-options">
 					<ul>
 						<li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
@@ -23,13 +22,10 @@
 						<li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
 					</ul>
 				</div>
+				<div class="arrw-down"><i class="fas fa-chevron-down"></i></div>
 				<div id="expanded">
-					<label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
-					<input name="twitter" type="text" value="mikeross" />
-					<label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
-					<input name="twitter" type="text" value="ross81" />
-					<label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
-					<input name="twitter" type="text" value="mike.ross" />
+					<label for="logout"><i class="fas fa-sign-out-alt"></i></label>
+					<input name="logout" type="button" value="Logout" />
 				</div>
 			</div>
 		</div>

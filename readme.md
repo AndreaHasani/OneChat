@@ -1,6 +1,6 @@
-# OneChat
+# Flask-Chat
 
-OneChat is a flask socketio chat platform.
+Flask-Chat is a flask socketio chat platform.
 
 ## Installation
 
@@ -13,7 +13,7 @@ First you will need to build the containers by running the following command.
 docker-compose up
 ```
 
-Then you will need to connect to mysql database container on port 3318 and create oneChat database.
+Then you will need to connect to mysql database container on port 3318 and create Flask-Chat database.
 After doing this you will need to run tests/dummy_values.py. This script will populate the database with dummy values for demo usage.
 ```bash
 python ./tests/dummy_values.py
@@ -30,7 +30,7 @@ Here is an example of what it may contain.
 
 ```python
 class Secrets:
-    SQLALCHEMY_DATABASE_URI = 'mysql://username:password@database/oneChat'
+    SQLALCHEMY_DATABASE_URI = 'mysql://username:password@database/Flask-Chat'
 ```
 
 
